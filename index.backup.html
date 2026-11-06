@@ -2697,10 +2697,13 @@
     async function syncFromGoogleSheets(notify = false) {
       if (!GOOGLE_SCRIPT_URL) return;
       try {
+        if (notify && typeof showToast === 'function') {
+          showToast('Menghubungi Google Sheets...', 'info');
+        }
         const res = await fetch(GOOGLE_SCRIPT_URL);
-        if (!res.ok) return;
+        if (!res.ok) throw new Error('HTTP ' + res.status);
         const data = await res.json();
-        if (data && Array.isArray(data.transactions) && data.transactions.length > 0) {
+        if (data && Array.isArray(data.transactions)) {
           const map = new Map(transactions.map(t => [t.id, t]));
           let newCount = 0;
           data.transactions.forEach(t => {
@@ -2714,16 +2717,20 @@
             saveToStorage();
             renderApp();
             if (notify && typeof showToast === 'function') {
-              showToast(`Tersinkron ${newCount} transaksi baru dari WhatsApp!`, 'success');
+              showToast(`Berhasil sinkron ${newCount} transaksi baru!`, 'success');
             }
           } else if (notify && typeof showToast === 'function') {
-            showToast('Semua data WhatsApp sudah mutakhir', 'info');
+            showToast('Data sudah yang terbaru (tidak ada transaksi baru).', 'info');
           }
         }
       } catch (err) {
-        console.warn('Sync Sheets note:', err);
+        console.error('Gagal sync Google Sheets:', err);
+        if (notify && typeof showToast === 'function') {
+          showToast('Gagal sinkron: ' + err.message, 'error');
+        }
       }
     }
+    window.syncFromGoogleSheets = syncFromGoogleSheets;
 
     const DEFAULT_GOALS = [
       {
