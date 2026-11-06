@@ -1835,6 +1835,14 @@
           Ekspor / Backup
         </button>
 
+        <button class="btn btn-secondary" onclick="syncFromGoogleSheets(true)" title="Sinkronkan transaksi dari WhatsApp & Google Sheets">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="23 4 23 10 17 10"></polyline>
+            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+          </svg>
+          Sync WA
+        </button>
+
         <button class="btn btn-scan" onclick="openScanModal()" title="Foto atau upload struk belanja untuk pencatatan otomatis">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
@@ -2683,6 +2691,39 @@
     const STORAGE_KEY_THEME = 'pencatatan_keuangan_theme_v2';
     const STORAGE_KEY_GOALS = 'pencatatan_keuangan_goals_v1';
     const STORAGE_KEY_MASCOT = 'pencatatan_keuangan_mascot_active_v1';
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw6uzfvPekxC6FxV8Mo1wUBa-vTVZ2J_vB3Wdx5O0ICyzheFHkW73XIed30DsVmG109bg/exec';
+
+    // Sinkronisasi data otomatis dengan Google Sheets / WhatsApp
+    async function syncFromGoogleSheets(notify = false) {
+      if (!GOOGLE_SCRIPT_URL) return;
+      try {
+        const res = await fetch(GOOGLE_SCRIPT_URL);
+        if (!res.ok) return;
+        const data = await res.json();
+        if (data && Array.isArray(data.transactions) && data.transactions.length > 0) {
+          const map = new Map(transactions.map(t => [t.id, t]));
+          let newCount = 0;
+          data.transactions.forEach(t => {
+            if (!map.has(t.id)) {
+              map.set(t.id, t);
+              newCount++;
+            }
+          });
+          if (newCount > 0) {
+            transactions = Array.from(map.values()).sort((a, b) => new Date(b.date) - new Date(a.date));
+            saveToStorage();
+            renderApp();
+            if (notify && typeof showToast === 'function') {
+              showToast(`Tersinkron ${newCount} transaksi baru dari WhatsApp!`, 'success');
+            }
+          } else if (notify && typeof showToast === 'function') {
+            showToast('Semua data WhatsApp sudah mutakhir', 'info');
+          }
+        }
+      } catch (err) {
+        console.warn('Sync Sheets note:', err);
+      }
+    }
 
     const DEFAULT_GOALS = [
       {
@@ -2720,6 +2761,8 @@
       initPixelCatMascot();
       registerServiceWorker();
       renderApp();
+      syncFromGoogleSheets(false);
+      setInterval(() => syncFromGoogleSheets(false), 45000);
     });
 
     function registerServiceWorker() {
@@ -4060,6 +4103,15 @@
         };
         transactions.unshift(newTx);
         showToast('Transaksi berhasil dicatat!', 'success');
+        if (GOOGLE_SCRIPT_URL) {
+          const syncMsg = `${newTx.type === 'expense' ? 'keluar' : 'masuk'} ${newTx.amount} ${newTx.category} ${newTx.title}`;
+          fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: syncMsg, sender: 'Web Dashboard' })
+          }).catch(e => console.warn('Sync to Sheets note:', e));
+        }
       }
 
       saveToStorage();
