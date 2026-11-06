@@ -2712,6 +2712,19 @@
           if (newCount > 0) {
             transactions = Array.from(map.values()).sort((a, b) => new Date(b.date) - new Date(a.date));
             saveToStorage();
+            renderAll();
+            if (notify && typeof showToast === 'function') {
+              showToast(`Berhasil sinkron ${newCount} transaksi baru dari WhatsApp!`);
+            }
+          } else if (notify && typeof showToast === 'function') {
+            showToast('Semua transaksi WhatsApp sudah sinkron.');
+          }
+        }
+      } catch (err) {
+        console.error('Gagal sync Google Sheets:', err);
+      }
+    }
+    window.syncFromGoogleSheets = syncFromGoogleSheets;
             renderApp();
             if (notify && typeof showToast === 'function') {
               showToast(`Tersinkron ${newCount} transaksi baru dari WhatsApp!`, 'success');
