@@ -3,6 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#ec4899" id="metaThemeColor" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="DompetKu" />
   <title>DompetKu • Pencatatan Keuangan</title>
   <!-- Google Fonts: Plus Jakarta Sans & Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -332,6 +336,7 @@
       inset: 0;
       background: rgba(0, 0, 0, 0.45);
       backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
       z-index: 45;
       opacity: 0;
       pointer-events: none;
@@ -355,7 +360,7 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      z-index: 50;
+      z-index: 60;
       transform: translateX(-100%);
       transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.35s ease;
     }
@@ -366,11 +371,11 @@
 
     @media (min-width: 960px) {
       .app-sidebar {
-        position: sticky;
-        top: 0;
-        height: 100dvh;
+        position: fixed;
         transform: translateX(0);
-        flex-shrink: 0;
+      }
+      .main-workspace {
+        margin-left: 264px;
       }
       .sidebar-backdrop,
       .mobile-only-menu-btn {
@@ -508,7 +513,7 @@
       min-width: 0;
       display: flex;
       flex-direction: column;
-      padding-bottom: calc(88px + env(safe-area-inset-bottom));
+      padding-bottom: calc(84px + env(safe-area-inset-bottom));
     }
 
     @media (min-width: 960px) {
@@ -525,7 +530,7 @@
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border-soft);
-      padding: calc(12px + env(safe-area-inset-top)) 16px 12px;
+      padding: calc(10px + env(safe-area-inset-top)) 16px 10px;
     }
 
     .topbar-inner {
@@ -558,9 +563,9 @@
     }
 
     .topbar-icon-btn {
-      width: 40px;
-      height: 40px;
-      border-radius: 14px;
+      width: 38px;
+      height: 38px;
+      border-radius: 13px;
       border: 1px solid var(--border-soft);
       background: var(--bg-surface);
       color: var(--text-primary);
@@ -580,37 +585,36 @@
       width: 100%;
       max-width: 820px;
       margin: 0 auto;
-      padding: 16px 16px 24px;
+      padding: 14px 16px 24px;
     }
 
     /* ==========================================================================
-       PERIOD SWITCHER (SIMETRIS & RINGKAS)
+       PERIOD SWITCHER (RINGKAS & LEGA DI LAYAR UTAMA)
        ========================================================================== */
     .period-wrapper {
       display: flex;
-      flex-direction: column;
       align-items: center;
-      gap: 10px;
-      margin-bottom: 18px;
+      justify-content: center;
+      margin-bottom: 14px;
     }
 
     .period-stepper {
       display: inline-flex;
       align-items: center;
       justify-content: space-between;
-      gap: 14px;
+      gap: 12px;
       background: var(--bg-glass);
       backdrop-filter: blur(12px);
       border: 1px solid var(--border-soft);
       border-radius: var(--radius-pill);
-      padding: 6px 8px;
-      min-width: 230px;
+      padding: 5px 8px;
+      min-width: 210px;
       box-shadow: var(--card-shadow);
     }
 
     .step-btn {
-      width: 30px;
-      height: 30px;
+      width: 28px;
+      height: 28px;
       border-radius: 50%;
       border: none;
       background: var(--bg-subtle);
@@ -632,39 +636,6 @@
       font-weight: 800;
       color: var(--text-primary);
       text-align: center;
-    }
-
-    .period-chips {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 6px;
-      width: 100%;
-      max-width: 440px;
-    }
-
-    .period-chip {
-      padding: 8px 4px;
-      border-radius: var(--radius-pill);
-      border: 1px solid var(--border-soft);
-      background: var(--bg-glass);
-      color: var(--text-secondary);
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-      text-align: center;
-      white-space: nowrap;
-      transition: all 0.25s ease;
-    }
-
-    .period-chip.active {
-      background: var(--accent);
-      color: #ffffff;
-      border-color: var(--accent);
-      box-shadow: 0 6px 16px -4px rgba(0, 0, 0, 0.2);
-    }
-
-    [data-theme="noir-black"] .period-chip.active {
-      color: #09090b;
     }
 
     /* ==========================================================================
@@ -741,9 +712,9 @@
       background: var(--hero-grad);
       color: #ffffff;
       border-radius: var(--radius-xl);
-      padding: 24px 22px;
+      padding: 20px 20px;
       box-shadow: var(--hero-shadow);
-      margin-bottom: 16px;
+      margin-bottom: 14px;
       transform-style: preserve-3d;
       transition: transform 0.22s ease-out, box-shadow 0.3s ease;
       user-select: none;
@@ -823,10 +794,10 @@
       position: relative;
       z-index: 2;
       font-family: var(--font-display);
-      font-size: clamp(26px, 6.5vw, 36px);
+      font-size: clamp(25px, 6.2vw, 34px);
       font-weight: 800;
       line-height: 1.15;
-      margin: 6px 0 18px;
+      margin: 4px 0 14px;
     }
 
     .hero-actions {
@@ -841,8 +812,8 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      padding: 12px 14px;
+      gap: 7px;
+      padding: 10px 12px;
       border-radius: var(--radius-md);
       font-family: var(--font-sans);
       font-size: 13px;
@@ -878,8 +849,8 @@
     .metrics-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-      margin-bottom: 22px;
+      gap: 8px;
+      margin-bottom: 18px;
     }
 
     .mini-metric-card {
@@ -888,14 +859,14 @@
       -webkit-backdrop-filter: blur(14px);
       border: 1px solid var(--border-soft);
       border-radius: var(--radius-lg);
-      padding: 14px 8px;
+      padding: 12px 6px;
       text-align: center;
       box-shadow: var(--card-shadow);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      gap: 5px;
       min-width: 0;
       transition: transform 0.25s ease;
     }
@@ -905,8 +876,8 @@
     }
 
     .mini-metric-icon {
-      width: 36px;
-      height: 36px;
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -933,7 +904,7 @@
     }
 
     /* ==========================================================================
-       SECTION HEADER & DAFTAR MUTASI (ANTI-GESER SAMPING DI HP)
+       SECTION HEADER & DAFTAR MUTASI (1 BARIS RAPI DI HP)
        ========================================================================== */
     .section-head {
       display: flex;
@@ -962,7 +933,7 @@
     .tx-list {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 9px;
     }
 
     .tx-card {
@@ -970,27 +941,27 @@
       backdrop-filter: blur(14px);
       border: 1px solid var(--border-soft);
       border-radius: var(--radius-lg);
-      padding: 14px;
+      padding: 11px 12px;
       box-shadow: var(--card-shadow);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      gap: 10px;
       min-width: 0;
     }
 
     .tx-main {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       min-width: 0;
       flex: 1;
     }
 
     .tx-thumb {
-      width: 44px;
-      height: 44px;
-      border-radius: 15px;
+      width: 40px;
+      height: 40px;
+      border-radius: 13px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1004,7 +975,7 @@
     }
 
     .tx-title {
-      font-size: 14px;
+      font-size: 13.5px;
       font-weight: 700;
       color: var(--text-primary);
       white-space: nowrap;
@@ -1013,7 +984,7 @@
     }
 
     .tx-meta {
-      font-size: 12px;
+      font-size: 11px;
       color: var(--text-secondary);
       margin-top: 2px;
       white-space: nowrap;
@@ -1023,14 +994,15 @@
 
     .tx-right {
       display: flex;
-      align-items: center;
-      gap: 10px;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
       flex-shrink: 0;
     }
 
     .tx-amount {
       font-family: var(--font-display);
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 800;
       white-space: nowrap;
     }
@@ -1041,13 +1013,13 @@
     .tx-actions {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 4px;
     }
 
     .icon-mini-btn {
-      width: 32px;
-      height: 32px;
-      border-radius: 10px;
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
       border: 1px solid var(--border-soft);
       background: var(--bg-subtle);
       color: var(--text-secondary);
@@ -1064,20 +1036,6 @@
 
     .icon-mini-btn:active {
       transform: scale(0.9);
-    }
-
-    /* Tata letak 2 baris di HP agar mutasi tidak pernah terpotong/geser samping */
-    @media (max-width: 560px) {
-      .tx-card {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 10px;
-      }
-      .tx-right {
-        justify-content: space-between;
-        padding-top: 8px;
-        border-top: 1px dashed var(--border-soft);
-      }
     }
 
     /* ==========================================================================
@@ -1429,39 +1387,44 @@
   <!-- Backdrop Sidebar Mobile -->
   <div id="sidebarBackdrop" class="sidebar-backdrop" onclick="toggleSidebar(false)"></div>
 
-  <div class="app-shell">
-    <!-- Sidebar Navigasi -->
-    <aside id="appSidebar" class="app-sidebar">
-      <div>
-        <div class="brand-row">
-          <div class="brand-badge">
-            <i data-lucide="wallet" style="width:22px;height:22px;"></i>
-          </div>
-          <div>
-            <div class="brand-name">DompetKu</div>
-            <div class="brand-tag">Catatan Keuangan</div>
-          </div>
+  <!-- Sidebar Navigasi (Di luar .app-shell agar tidak tertimpa blur backdrop) -->
+  <aside id="appSidebar" class="app-sidebar">
+    <div>
+      <div class="brand-row">
+        <div class="brand-badge">
+          <i data-lucide="wallet" style="width:22px;height:22px;"></i>
         </div>
-
-        <nav class="sidebar-nav">
-          <button class="sidebar-item active" data-slide="0" onclick="switchSlide(0)">
-            <i data-lucide="home" style="width:18px;height:18px;"></i>
-            <span>Saldo</span>
-          </button>
-          <button class="sidebar-item" data-slide="1" onclick="switchSlide(1)">
-            <i data-lucide="pie-chart" style="width:18px;height:18px;"></i>
-            <span>Analisis</span>
-          </button>
-          <button class="sidebar-item" data-slide="2" onclick="switchSlide(2)">
-            <i data-lucide="target" style="width:18px;height:18px;"></i>
-            <span>Target</span>
-          </button>
-          <button class="sidebar-item" data-slide="3" onclick="switchSlide(3)">
-            <i data-lucide="list" style="width:18px;height:18px;"></i>
-            <span>Riwayat</span>
-          </button>
-        </nav>
+        <div>
+          <div class="brand-name">DompetKu</div>
+          <div class="brand-tag">Catatan Keuangan</div>
+        </div>
       </div>
+
+      <nav class="sidebar-nav">
+        <button class="sidebar-item active" data-slide="0" onclick="switchSlide(0)">
+          <i data-lucide="home" style="width:18px;height:18px;"></i>
+          <span>Saldo</span>
+        </button>
+        <button class="sidebar-item" data-slide="1" onclick="switchSlide(1)">
+          <i data-lucide="pie-chart" style="width:18px;height:18px;"></i>
+          <span>Analisis</span>
+        </button>
+        <button class="sidebar-item" data-slide="2" onclick="switchSlide(2)">
+          <i data-lucide="target" style="width:18px;height:18px;"></i>
+          <span>Target</span>
+        </button>
+        <button class="sidebar-item" data-slide="3" onclick="switchSlide(3)">
+          <i data-lucide="list" style="width:18px;height:18px;"></i>
+          <span>Riwayat</span>
+        </button>
+      </nav>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <button type="button" id="installAppBtn" class="btn-primary" style="width:100%;justify-content:center;" onclick="triggerInstallApp()">
+        <i data-lucide="smartphone" style="width:16px;height:16px;"></i>
+        <span>Pasang Aplikasi</span>
+      </button>
 
       <div class="theme-box">
         <span class="theme-box-label">Tema Warna</span>
@@ -1476,8 +1439,10 @@
           </button>
         </div>
       </div>
-    </aside>
+    </div>
+  </aside>
 
+  <div class="app-shell">
     <!-- Area Kerja Utama -->
     <main id="mainWorkspace" class="main-workspace">
       <!-- Topbar -->
@@ -1501,23 +1466,16 @@
       </header>
 
       <div class="content-container">
-        <!-- Pemilih Periode Simetris -->
+        <!-- Pemilih Periode Simetris & Ringkas -->
         <div class="period-wrapper">
           <div class="period-stepper">
             <button type="button" class="step-btn" onclick="cyclePeriod(-1)" aria-label="Periode Sebelumnya">
-              <i data-lucide="chevron-left" style="width:16px;height:16px;"></i>
+              <i data-lucide="chevron-left" style="width:15px;height:15px;"></i>
             </button>
             <span id="periodLabelText" class="period-current-label">Bulan Ini</span>
             <button type="button" class="step-btn" onclick="cyclePeriod(1)" aria-label="Periode Berikutnya">
-              <i data-lucide="chevron-right" style="width:16px;height:16px;"></i>
+              <i data-lucide="chevron-right" style="width:15px;height:15px;"></i>
             </button>
-          </div>
-
-          <div class="period-chips">
-            <button type="button" class="period-chip" data-period="today" onclick="setPeriod('today')">Hari Ini</button>
-            <button type="button" class="period-chip" data-period="7d" onclick="setPeriod('7d')">7 Hari</button>
-            <button type="button" class="period-chip active" data-period="month" onclick="setPeriod('month')">Bulan Ini</button>
-            <button type="button" class="period-chip" data-period="all" onclick="setPeriod('all')">Semua</button>
           </div>
         </div>
 
@@ -1891,7 +1849,7 @@
 
     let monthlyBudget = 3500000;
 
-    let transactions = [
+    const DEFAULT_TRANSACTIONS = [
       { id: 't1', type: 'income', title: 'Gaji Bulanan', category: 'Gaji', amount: 6500000, date: getLocalDateStr(-4) },
       { id: 't2', type: 'expense', title: 'Makan Siang & Kopi', category: 'Makan & Minum', amount: 65000, date: getLocalDateStr(0) },
       { id: 't3', type: 'expense', title: 'Transportasi Harian', category: 'Transportasi', amount: 35000, date: getLocalDateStr(0) },
@@ -1900,10 +1858,46 @@
       { id: 't6', type: 'income', title: 'Bonus Proyek', category: 'Bonus', amount: 850000, date: getLocalDateStr(-6) }
     ];
 
-    let goals = [
+    const DEFAULT_GOALS = [
       { id: 'g1', title: 'Dana Darurat', target: 10000000, saved: 4500000 },
       { id: 'g2', title: 'Liburan Akhir Tahun', target: 4000000, saved: 1850000 }
     ];
+
+    let transactions = [...DEFAULT_TRANSACTIONS];
+    let goals = [...DEFAULT_GOALS];
+
+    function saveAppState() {
+      try {
+        window.localStorage.setItem('dompetku_v3_state', JSON.stringify({
+          theme: currentTheme,
+          budget: monthlyBudget,
+          transactions,
+          goals
+        }));
+      } catch (e) {}
+    }
+
+    function loadAppState() {
+      try {
+        const raw = window.localStorage.getItem('dompetku_v3_state');
+        if (!raw) return;
+        const parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          if (parsed.theme === 'noir-black' || parsed.theme === 'pastel-pink') {
+            currentTheme = parsed.theme;
+          }
+          if (Number.isFinite(Number(parsed.budget)) && Number(parsed.budget) >= 10000) {
+            monthlyBudget = Number(parsed.budget);
+          }
+          if (Array.isArray(parsed.transactions)) {
+            transactions = parsed.transactions;
+          }
+          if (Array.isArray(parsed.goals)) {
+            goals = parsed.goals;
+          }
+        }
+      } catch (e) {}
+    }
 
     let cashflowChartInstance = null;
     let categoryChartInstance = null;
@@ -1982,6 +1976,8 @@
       document.documentElement.setAttribute('data-theme', currentTheme);
 
       const isBlack = currentTheme === 'noir-black';
+      const metaTheme = document.getElementById('metaThemeColor');
+      if (metaTheme) metaTheme.setAttribute('content', isBlack ? '#09090b' : '#ec4899');
       document.getElementById('themeBtnPink').classList.toggle('active', !isBlack);
       document.getElementById('themeBtnBlack').classList.toggle('active', isBlack);
 
@@ -1991,6 +1987,7 @@
       }
 
       renderAll();
+      saveAppState();
       lucide.createIcons();
     }
 
@@ -2129,10 +2126,6 @@
       document.getElementById('periodLabelText').textContent = PERIOD_NAMES[periodKey];
       document.getElementById('heroPeriodBadge').textContent = PERIOD_NAMES[periodKey];
 
-      document.querySelectorAll('.period-chip').forEach(chip => {
-        chip.classList.toggle('active', chip.dataset.period === periodKey);
-      });
-
       renderAll();
     }
 
@@ -2148,13 +2141,18 @@
       const currentMonthPrefix = todayStr.slice(0, 7);
 
       return transactions
-        .filter(tx => {
+        .map((tx, idx) => ({ tx, idx }))
+        .filter(({ tx }) => {
           if (currentPeriod === 'today') return tx.date === todayStr;
           if (currentPeriod === '7d') return tx.date >= sevenDaysAgoStr && tx.date <= todayStr;
           if (currentPeriod === 'month') return tx.date.startsWith(currentMonthPrefix);
           return true;
         })
-        .sort((a, b) => b.date.localeCompare(a.date));
+        .sort((a, b) => {
+          const dateDiff = b.tx.date.localeCompare(a.tx.date);
+          return dateDiff !== 0 ? dateDiff : a.idx - b.idx;
+        })
+        .map(({ tx }) => tx);
     }
 
     function getCategoryIcon(category) {
@@ -2198,7 +2196,7 @@
         <div class="tx-card anim-list-item" style="--stagger-delay:${delay}s;">
           <div class="tx-main">
             <div class="tx-thumb" style="${getCategoryStyle(tx.category)}">
-              <i data-lucide="${getCategoryIcon(tx.category)}" style="width:19px;height:19px;"></i>
+              <i data-lucide="${getCategoryIcon(tx.category)}" style="width:18px;height:18px;"></i>
             </div>
             <div class="tx-info">
               <div class="tx-title">${escapeHtml(tx.title)}</div>
@@ -2211,10 +2209,10 @@
             </span>
             <div class="tx-actions">
               <button type="button" class="icon-mini-btn" onclick="openTxModal('${tx.id}')" title="Ubah">
-                <i data-lucide="pencil" style="width:14px;height:14px;"></i>
+                <i data-lucide="pencil" style="width:13px;height:13px;"></i>
               </button>
               <button type="button" class="icon-mini-btn" onclick="askDeleteTx('${tx.id}')" title="Hapus">
-                <i data-lucide="trash-2" style="width:14px;height:14px;"></i>
+                <i data-lucide="trash-2" style="width:13px;height:13px;"></i>
               </button>
             </div>
           </div>
@@ -2357,16 +2355,18 @@
       }
 
       goalsEl.innerHTML = goals.map((g, idx) => {
-        const gPct = g.target > 0 ? Math.min(100, Math.round((g.saved / g.target) * 100)) : 0;
+        const rawPct = g.target > 0 ? Math.round((g.saved / g.target) * 100) : 0;
+        const barPct = Math.min(100, rawPct);
+        const statusBadge = rawPct >= 100 ? 'Tercapai!' : `${rawPct}%`;
         const delay = Math.min(0.15 + idx * 0.1, 0.7).toFixed(2);
         return `
           <div class="tx-card anim-list-item" style="flex-direction:column;align-items:stretch;--stagger-delay:${delay}s;">
             <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
-              <div>
+              <div style="min-width:0;flex:1;">
                 <div class="tx-title">${escapeHtml(g.title)}</div>
-                <div class="tx-meta tabular-nums">${formatRupiah(g.saved)} / ${formatRupiah(g.target)} (${gPct}%)</div>
+                <div class="tx-meta tabular-nums">${formatRupiah(g.saved)} / ${formatRupiah(g.target)} (${statusBadge})</div>
               </div>
-              <div style="display:flex;gap:6px;">
+              <div style="display:flex;gap:6px;flex-shrink:0;">
                 <button type="button" class="btn-soft" style="padding:7px 11px;font-size:12px;" onclick="openTopupModal('${g.id}')">+ Setor</button>
                 <button type="button" class="icon-mini-btn" onclick="askDeleteGoal('${g.id}')" title="Hapus">
                   <i data-lucide="trash-2" style="width:14px;height:14px;"></i>
@@ -2374,7 +2374,7 @@
               </div>
             </div>
             <div class="progress-track" style="margin:6px 0 0;">
-              <div class="progress-fill" style="width:${gPct}%;"></div>
+              <div class="progress-fill" style="width:${barPct}%;"></div>
             </div>
           </div>
         `;
@@ -2417,6 +2417,9 @@
     function closeModal(id) {
       const modal = document.getElementById(id);
       if (modal) modal.classList.remove('open');
+      if (id === 'confirmDeleteModal') {
+        pendingDeleteAction = null;
+      }
       syncBodyScrollLock();
     }
 
@@ -2493,6 +2496,7 @@
       }
 
       closeModal('txModal');
+      saveAppState();
       renderAll();
     }
 
@@ -2502,6 +2506,7 @@
       document.getElementById('confirmDeleteMessage').textContent = `Hapus catatan "${tx.title}" (${formatRupiah(tx.amount)})?`;
       pendingDeleteAction = () => {
         transactions = transactions.filter(t => t.id !== id);
+        saveAppState();
         renderAll();
         showToast('Catatan dihapus');
       };
@@ -2517,6 +2522,7 @@
       e.preventDefault();
       const val = Math.max(10000, Math.round(Number(document.getElementById('budgetInput').value) || 0));
       monthlyBudget = val;
+      saveAppState();
       closeModal('budgetModal');
       renderBudgetAndGoals();
       showToast('Limit bulanan diperbarui');
@@ -2537,6 +2543,7 @@
       if (!title) return;
 
       goals.push({ id: 'g_' + Date.now(), title, target, saved });
+      saveAppState();
       closeModal('goalModal');
       renderBudgetAndGoals();
       showToast('Celengan impian dibuat');
@@ -2559,6 +2566,7 @@
       if (!goal) return;
 
       goal.saved += addVal;
+      saveAppState();
       closeModal('topupModal');
       renderBudgetAndGoals();
       showToast(`Berhasil setor ${formatRupiah(addVal)}`);
@@ -2570,6 +2578,7 @@
       document.getElementById('confirmDeleteMessage').textContent = `Hapus target celengan "${goal.title}"?`;
       pendingDeleteAction = () => {
         goals = goals.filter(g => g.id !== goalId);
+        saveAppState();
         renderBudgetAndGoals();
         showToast('Target celengan dihapus');
       };
@@ -2616,18 +2625,79 @@
     }
 
     /* ========================================================================
-       INISIALISASI APLIKASI
+       DUKUNGAN PWA (INSTAL KE LAYAR UTAMA HP)
        ======================================================================== */
+    let deferredInstallPrompt = null;
+
+    function initPWASupport() {
+      const svgIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="120" fill="#ec4899"/><rect x="116" y="156" width="280" height="200" rx="44" fill="none" stroke="#ffffff" stroke-width="32"/><circle cx="324" cy="256" r="22" fill="#ffffff"/></svg>`;
+      const iconUrl = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgIcon);
+
+      const manifestObj = {
+        name: 'DompetKu • Pencatatan Keuangan',
+        short_name: 'DompetKu',
+        description: 'Aplikasi pencatatan keuangan pribadi mobile-first',
+        start_url: './',
+        display: 'standalone',
+        background_color: '#fff5f8',
+        theme_color: '#ec4899',
+        icons: [
+          { src: iconUrl, sizes: '192x192', type: 'image/svg+xml' },
+          { src: iconUrl, sizes: '512x512', type: 'image/svg+xml' }
+        ]
+      };
+
+      try {
+        const manifestBlob = new Blob([JSON.stringify(manifestObj)], { type: 'application/manifest+json' });
+        const manifestLink = document.createElement('link');
+        manifestLink.rel = 'manifest';
+        manifestLink.href = URL.createObjectURL(manifestBlob);
+        document.head.appendChild(manifestLink);
+
+        const appleIcon = document.createElement('link');
+        appleIcon.rel = 'apple-touch-icon';
+        appleIcon.href = iconUrl;
+        document.head.appendChild(appleIcon);
+      } catch (e) {}
+
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredInstallPrompt = e;
+      });
+    }
+
+    async function triggerInstallApp() {
+      if (deferredInstallPrompt) {
+        deferredInstallPrompt.prompt();
+        await deferredInstallPrompt.userChoice;
+        deferredInstallPrompt = null;
+        toggleSidebar(false);
+        return;
+      }
+      toggleSidebar(false);
+      showToast('Buka menu browser → Tambah ke Layar Utama');
+    }
+
     document.getElementById('confirmDeleteBtn').addEventListener('click', () => {
       if (typeof pendingDeleteAction === 'function') {
-        pendingDeleteAction();
+        const action = pendingDeleteAction;
         pendingDeleteAction = null;
+        action();
       }
       closeModal('confirmDeleteModal');
     });
 
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-overlay.open').forEach(m => closeModal(m.id));
+        toggleSidebar(false);
+      }
+    });
+
     window.addEventListener('DOMContentLoaded', () => {
-      setTheme('pastel-pink');
+      loadAppState();
+      initPWASupport();
+      setTheme(currentTheme);
       setupHeroInteractions();
       setupSwipeNavigation();
       lucide.createIcons();
